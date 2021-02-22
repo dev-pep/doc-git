@@ -22,7 +22,7 @@ Si deseamos incluir todo el contenido de la carpeta del proyecto al repositorio 
 
 Esto añade todos los archivos y carpetas, excepto las carpetas vacías, que son invisibles para *Git*.
 
-Los sucesivos cambios que se realizan en archivos *tracked* son cambios no *staged* (cambios *unstaged*), con lo cual el archivo está en estado *modified*, hasta que añadimos el archivo al *staging area* mediante `add`.
+Los sucesivos cambios que se realizan en archivos *tracked* son cambios no *staged* (cambios *unstaged*), con lo cual el archivo está en estado *modified*, hasta que añadimos el archivo al *staging area* mediante `git add <archivo(s)>`.
 
 ## Committed
 
@@ -49,3 +49,29 @@ Podemos ir realizando todos los *commits* que deseemos en modo local. Para subir
 `git push`
 
 Todos los *commits* existentes pasarán a añadirse al repositorio remoto.
+
+## Áreas
+
+Dependiendo del estado de un archivo del repositorio, residirá en una u otra área de las siguientes:
+
+- El directorio de trabajo
+- La *staging area*
+- El repositorio en sí
+
+### Directorio de trabajo
+
+El directorio de trabajo (*working tree*) es una instantánea, o un *checkout* del repositorio. Son los archivos del proyecto, en una versión concreta.
+
+Si nos desplazamos por las distintas versiones (*commits*), hacia adelante o atrás, por cualquiera de las ramas del repositorio, veremos como los archivos del directorio de trabajo cambian a medida que son *pulled* del repositorio local: su contenido cambiará, unos archivos o carpetas aparecerán, otros desaparecerán, etc.
+
+Los cambios realizados en el directorio de trabajo pueden ser *staged*.
+
+### Staging area
+
+Es un archivo en el repositorio (dentro del directorio `.git`) con información sobre todo lo que entrará en el próximo *commit*.
+
+La *staging area* puede contener algunos cambios realizados en un archivo, mientras otros cambios en el mismo archivo pueden estar *unstaged* (es decir, en estado *modified*) si hemos realizado estos cambios después de haber pasado el archivo a la *staging area* con `git add <archivo>`. Solo los cambios *staged* se incluirán en el *commit*.
+
+Se puede hacer *commit* de todos los cambios (exceptuando los archivos *untracked*) con este comando:
+
+`git commit -a -m "Mensaje del commit"`

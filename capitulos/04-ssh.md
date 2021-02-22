@@ -4,7 +4,7 @@ Para poder hacer cambios en el repositorio remoto de *github.com*, u otros servi
 
 En primer lugar habrá que crear el par de claves RSA:
 
-`ssh-keygen -t rsa -b 4096 -C "correo@electronico.com`
+`ssh-keygen -t rsa -b 4096 -C "correo@electronico.com"`
 
 Estos parámetros son los recomendados en el caso de *github.com*, teniendo en cuenta que el correo electrónico debe ser el del usuario de *github*.
 

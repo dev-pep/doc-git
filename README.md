@@ -6,8 +6,9 @@ Estos son mis apuntes de *Git*.
 
 1. [Primeros pasos](capitulos/01-primeros-pasos.md)
 2. [Estados del repositorio](capitulos/02-estados.md)
-3. [Autenticación con ssh](capitulos/03-ssh.md)
-4. [Configuración de Git](capitulos/04-configuracion.md)
+3. [Trabajar en Git](capitulos/03-trabajar-en-git.md)
+3. [Autenticación con ssh](capitulos/04-ssh.md)
+4. [Configuración de Git](capitulos/05-configuracion.md)
 
 ---
 
