@@ -10,9 +10,13 @@ Estos son mis apuntes de *Git*.
 4. [Autenticación con ssh](capitulos/04-ssh.md)
 5. [Configuración de Git](capitulos/05-configuracion.md)
 
+## Bibliografía
+
+Libro [Pro Git](https://git-scm.com/book/).
+
 ---
 
-Shield: [![CC BY 4.0][cc-by-shield]][cc-by]
+[![CC BY 4.0][cc-by-shield]][cc-by]
 
 Esta obra está bajo una
 [Licencia Creative Commons Atribución 4.0 Internacional][cc-by].

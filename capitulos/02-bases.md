@@ -227,7 +227,9 @@ También se puede filtrar la lista según los *commits* que hayan afectado a uno
 git log -- <archivo(s)>
 ```
 
-El doble guión es para separar las rutas de archivos, que van al final de todo, de otras opciones.
+El doble guión es para separar las rutas de archivos (que van al final de todo) de otras opciones.
+
+Una de las múltiples opciones es `--oneline`, que muestra un *commit* por línea.
 
 ## Deshacer errores
 
@@ -325,12 +327,25 @@ Para ver un subconjunto, se puede usar el flag `--list` (o `-l`) junto con los *
 git tag --list "v.1.5*"
 ```
 
+### Checkouts
+
+Es posible establecer el estado del directorio de trabajo en un *commit* anterior. Para ello se debe hacer un *checkout* de esa versión:
+
+```
+git checkout <nombreTag>
+git checkout <commitChecksum>
+git checkout <nombreRama>
+```
+
+En la primera versión simplemente indicamos el nombre de la etiqueta para ir hasta ese *commit*. En el segundo caso, simplemente indicamos el *checksum* del *commit* deseado. No es necesario indicar los 40 caracteres del *hash SHA-1*. Con indicar algunos caracteres iniciales es suficiente.
+
+Es importante recalcar que si el estado actual del directorio de trabajo no se corresponde con el **último *commit* de la rama actual** (aunque sea el último *commit* de otra rama), nos encontramos en un estado de ***HEAD* desacoplada**, o *detached HEAD* (***HEAD*** es el apuntador al estado actual). En este estado, cualquier *commit* que realicemos a partir de este punto no pertenecerá a ninguna rama, por lo que no será alcanzable desde ninguna rama (solo indicando el *checksum* del *commit* en sí). Sin embargo, sí se puede crear una rama nueva a partir de un punto con *detached HEAD*. Hablaremos sobre ramas más adelante.
+
 ### Tipos de etiquetas
 
 *Annotated tags*: objetos completos almacenados en el repositorio. Como objeto, tienen su *checksum SHA-1*, nombre de su creador, su correo, fecha y descripción.
 
 Creación de una *annotated tag* (apuntará al último *commit*):
-
 
 ```
 git tag -a v2.0 -m "La versión 2.0"
