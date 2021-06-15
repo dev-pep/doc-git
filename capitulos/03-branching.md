@@ -351,3 +351,11 @@ git merge iss53
 ```
 
 Como norma general, un *rebase* queda más limpio que un *merge* de ramas, ya que eliminamos todos los *commits* de una rama, y los sustitiomos por uno solo (el parche aplicado). Sin embargo, esto solo puede hacerse si todo el trabajo en esa rama que vamos a dejar fuera se ha hecho en local. Si hemos hecho *push* de esa rama en algún momento ya no se debe hacer, porque quedarían *commits* sin rama en el servidor.
+
+## Organización del proyecto
+
+Un proyecto se puede organizar de una infinidad de formas distintas con *Git*. Puede haber más de un servidor remoto; se pueden organizar los servidores por secciones del proyecto, o trabajar todos contra el mismo servidor.
+
+En el caso de varios remotos, se podría trabajar en una rama distinta en cada servidor. En este caso, debería haber algún miembro del proyecto, o algún grupo del mismo que se encargara de acceder a todos los remotos (es decir, a todas las ramas) para, cuando fuese necesario fusionar su contenido con la rama principal. El resto de departamentos no tendría por qué tener acceso a esas ramas, con lo que solo tendrían acceso a los cambios de estas cuando estuviesen fusionados con la rama principal.
+
+Las posibilidades de organización son ilimitadas.

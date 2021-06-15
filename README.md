@@ -7,7 +7,7 @@ Estos son mis apuntes de *Git*.
 1. [Primeros pasos en Git](capitulos/01-primeros-pasos.md)
 2. [Bases de Git](capitulos/02-bases.md)
 3. [Branching](capitulos/03-branching.md)
-4. [Autenticación con ssh](capitulos/04-ssh.md)
+4. [Git en servidor remoto](capitulos/04-servidor-remoto.md)
 5. [Configuración de Git](capitulos/05-configuracion.md)
 
 ## Bibliografía
