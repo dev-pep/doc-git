@@ -20,7 +20,7 @@ Los archivos pueden tener distintos estados, y residirán en una u otra ubicaci�
 
 Dentro de la carpeta del proyecto, existe una subcarpeta ***.git*** donde reside el repositorio completo, con todas sus versiones. Fuera de dicha subcarpeta, tenemos el directorio de trabajo (*working dir*) que no es más que una de las versiones (normalmente la última) del proyecto; es la versión sobre la que estamos trabajando.
 
-![Ubicaciones](../imagenes/01a-ubicaciones.png "Ubicaciones")\
+![Ubicaciones](../imagenes/01a-ubicaciones.png)\
 *Ubicaciones en un repositorio Git.*
 
 Dentro del directorio de trabajo existen archivos no modificados (*unmodified*), es decir, que coinciden con la versión existente en el repositorio.

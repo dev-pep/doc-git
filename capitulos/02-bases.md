@@ -32,7 +32,7 @@ En cuanto a la autenticación, *Git* admite varios protocolos, que se verán má
 
 Los archivos pueden estar *untracked* (no rastreados) o *tracked* (rastreados). En este último caso, pueden estar *unmodified* (no modificados), *modified* (modificados), o *staged* (listos para *commit*).
 
-![Estados](../imagenes/02a-estados.png "Estados")\
+![Estados](../imagenes/02a-estados.png)\
 *Estados de los archivos en un repositorio Git.*
 
 Para comprobar el estado de un repositorio disponemos del comando:
