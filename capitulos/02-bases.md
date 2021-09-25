@@ -155,17 +155,11 @@ rm file1.txt
 
 Luego pasar el cambio a *staged*:
 
-
 ```
 git add file1.txt
 ```
-En este caso específico (eliminación), disponemos de otro comando sinónimo:
 
-```
-git rm file1.txt
-```
-
-Sin embargo, en lugar de teclear estos dos comandos, podemos usar simplemente el comando anterior:
+Sin embargo, en lugar de teclear estos dos comandos, podemos usar simplemente un comando que equivale e los dos anteriores:
 
 ```
 git rm file1.txt
@@ -193,6 +187,8 @@ Existe un modo de eliminar archivos del repositorio sin eliminarlos del director
 git rm --cached <archivo(s)>
 ```
 
+> En todo caso, hay que tener en cuenta que eliminar (y crear) directorios o estructuras de directorios vacíos (sin archivos), no tiene ningún efecto en el siguiente *commit*.
+
 ## Renombrar archivos
 
 Supongamos que un archivo ***org.txt*** se tiene que renombrar a ***dest.txt***. En realidad es como borrar un archivo y crear otro con distinto nombre:
@@ -210,6 +206,14 @@ git mv org.txt dest.txt
 ```
 
 En cualquiera de los dos casos, *Git* se da cuenta de que ha sido un cambio de nombre (y/o cambio de ubicación). En todo caso, tras el *commit*, el cambio queda en el repositorio.
+
+Dependiendo del sistema operativo, es posible que *git* esté configurado como *case insensitive* (opción de configuración `core.ignorecase`), con lo que cambiar simplemente los caracteres de un nombre de archivo o directorio a sus correspondientes mayúsculas o minúsculas, puede que no se interprete como un cambio, y no aparezca en el siguiente *commit*. en todo caso, para forzar un renombrado *case sensitive*, se puede usar el *flag* `-f`:
+
+```
+git mv -f folder1 Folder1
+```
+
+En todo caso, renombrar un directorio o estructura de directorios vacío, al igual que sucedía con la eliminación, no tiene efecto alguno en el *commit*.
 
 ## Histórico de *commits*
 
