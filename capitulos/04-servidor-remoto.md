@@ -120,7 +120,14 @@ git init --bare --shared
 ```
 Con `--bare` evitamos que se cree un *working tree*.
 
-Todo lo que se necesita ahora es dar a los colaboradores acceso *SSH* al servidor.
+En cuanto a `--shared`, indica cómo proceder en cuanto a permisos sobre los archivos del repositorio a la hora de compartirlo entre distintos usuarios. El formato de este *flag* es `--shared[=valor]`. Este valor puede ser:
+
+- ***umask*** o ***false*** es el valor por defecto cuando no se especifica `--shared`. En este caso, los permisos de los archivos son los definidos en el sistema operativo (en *Linux* sería el *umask*).
+- ***group*** o ***true*** es el valor por defecto cuando se especifica `--shared` sin más. En este caso, independientemente de los permisos del sistema, se permite la escritura a los usuarios del grupo (no afecta a los otros bits del *umask*: *owner* y *other*). Relaja siempre el *umask*.
+- ***all*** o ***world*** o ***everybody*** es como ***group*** pero además hace el repositorio accesible para lectura a todos los usuarios.
+- ***0xxx*** es el número octal, que sustituye al *umask* del sistema. En este caso puede ser más restrictivo que este (o más permisivo).
+
+En todo caso, una vez ejecutado este comando, todo lo que se necesita ahora es dar a los colaboradores acceso *SSH* al servidor.
 
 El problema, si hay muchos colaboradores, es que hay que crear un usuario en el sistema para cada uno de ellos. Esto se puede evitar creando un solo usuario (por ejemplo ***git***) que tenga las claves públicas de todos los colaboradores.
 
