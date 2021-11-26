@@ -134,3 +134,60 @@ El problema, si hay muchos colaboradores, es que hay que crear un usuario en el 
 Si queremos dar acceso de lectura a todo el público, deberemos iniciar un *daemon* que sirva el protocolo *Git*.
 
 Alternativamente (o al mismo tiempo), podríamos dar acceso *HTTP* a nuestro repositorio. Esto se hace activando un *script CGI* que lee los *requests* de *fetch* y *push* y los maneja adecuadamente (primero lo intenta mediante el protocolo *smart*, y si no es posible, *falls back* al *dumb*).
+
+## Gitweb
+
+*Git* ofrece la posibilidad de navegar los repositorios mediante un navegador *web*. Existen varias formas, pero si se desea disponer de una *URL* permanente donde examinar los repositorios, se deben seguir las instrucciones detalladas a continuación.
+
+En primer lugar, hay que instalar el paquete *Gitweb*. En distribuciones *Linux* basadas en *Debian*, se haría así:
+
+```
+sudo apt-get install gitweb
+```
+
+Una vez instalado, podríamos hallar los *scripts* de *Gitweb* en el directorio ***/usr/share/gitweb***, aunque esto dependerá de cada sistema.
+
+Si disponemos de un servidor *HTTP* *Apache*, deberemos habilitar el módulo de *CGI*:
+
+```
+sudo a2enmod cgid
+```
+
+En este punto, es posible que ya esté toda la configuración hecha automáticamente en *Apache*. En todo caso, deberemos asegurarnos de que la configuración de *Gitweb* está incluida dentro de las configuraciones del servidor. Es posible que (dependiendo del sistema) encontremos el archivo de configuración de *Apache* ***gitweb.conf*** dentro del directorio de configuraciones habilitadas del servidor (***conf-enabled***). En caso contrario, deberemos habilitarla:
+
+```
+sudo a2enconf gitweb
+```
+
+Podría suceder que este comando fallara debido a que tal configuración no estuviera disponible. En ese caso tendríamos que crear previamente el archivo ***gitweb.conf*** dentro del directorio de configuraciones de *Apache* (***conf-available***). El contenido de tal archivo podría ser algo así:
+
+```
+<IfModule mod_alias.c>
+    <IfModule mod_mime.c>
+        <IfModule mod_cgi.c>
+            Define ENABLE_GITWEB
+        </IfModule>
+        <IfModule mod_cgid.c>
+            Define ENABLE_GITWEB
+        </IfModule>
+    </IfModule>
+</IfModule>
+
+<IfDefine ENABLE_GITWEB>
+    Alias /gitweb /usr/share/gitweb
+    <Directory /usr/share/gitweb>
+        Options +FollowSymLinks +ExecCGI
+        AddHandler cgi-script .cgi
+    </Directory>
+</IfDefine>
+```
+
+Lo que hace esta configuración de ejemplo es, previa comprobación de la existencia de módulos, asociar la *URI* ***/gitweb*** al *script Gitweb*, y establecer opciones en el directorio objetivo.
+
+Por otro lado, es necesario configurar la aplicación *Gitweb* en sí, especialmente para indicar la ruta en la que se hallan los repositorios. Para ello deberemos editar el archivo de configuración de *Gitweb*, que en sistemas *Linux* podríamos encontrar en ***/etc/gitweb.conf***.
+
+En este archivo deberemos configurar la variable ***\$projectroot***, que estableceremos a la ruta donde se encuentran nuestros repositorios.
+
+En el directorio raíz de cada repositorio podemos crear archivos que proporcionan información sobre el mismo. Especialmente útiles son los archivos ***description*** (o ***gitweb.description***) y ***category*** (o ***gitweb.category***), utilizados para visualizar una descripción corta del proyecto (una línea), y para asociarlo a una categoría. A la hora de visualizar los repositorios, estos son agrupados por categorías (si no tienen tal archivo de categoría, pertenecen a la categoría ***default***).
+
+Este tipo de archivos (descripción, categoría, etc.) deberían incluirse en ***.gitignore*** para que no pasaran a formar parte del control de versiones.
