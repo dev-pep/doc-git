@@ -382,6 +382,8 @@ Para subir **todas** nuestras etiquetas (ligeras y *annotated*) a un remoto (las
 git push <nombreRemoto> --tags
 ```
 
+Se puede obviar el nombre del remoto (las enviará al remoto por defecto).
+
 Para eliminar una etiqueta (local):
 
 ```
