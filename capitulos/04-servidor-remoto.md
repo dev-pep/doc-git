@@ -188,6 +188,4 @@ Por otro lado, es necesario configurar la aplicación *Gitweb* en sí, especialm
 
 En este archivo deberemos configurar la variable ***\$projectroot***, que estableceremos a la ruta donde se encuentran nuestros repositorios.
 
-En el directorio raíz de cada repositorio podemos crear archivos que proporcionan información sobre el mismo. Especialmente útiles son los archivos ***description*** (o ***gitweb.description***) y ***category*** (o ***gitweb.category***), utilizados para visualizar una descripción corta del proyecto (una línea), y para asociarlo a una categoría. A la hora de visualizar los repositorios, estos son agrupados por categorías (si no tienen tal archivo de categoría, pertenecen a la categoría ***default***).
-
-Este tipo de archivos (descripción, categoría, etc.) deberían incluirse en ***.gitignore*** para que no pasaran a formar parte del control de versiones.
+En el directorio raíz de un proyecto (no en el *working dir*, sino en el raíz del *bare repository*, en el servidor) podemos crear archivos que proporcionan información sobre el mismo. Especialmente útiles son los archivos ***description*** (o ***gitweb.description***) y ***category*** (o ***gitweb.category***), utilizados para visualizar una descripción corta del proyecto (una línea), y para asociarlo a una categoría. A la hora de visualizar los repositorios, estos son agrupados por categorías (si no tienen tal archivo de categoría, pertenecen a la categoría ***default***).
