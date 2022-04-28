@@ -328,7 +328,7 @@ git tag
 Para ver un subconjunto, se puede usar el flag `--list` (o `-l`) junto con los *wildcards* deseados.
 
 ```
-git tag --list "v.1.5*"
+git tag --list "1.5.*"
 ```
 
 ### Checkouts
@@ -352,23 +352,25 @@ Es importante recalcar que si el estado actual del directorio de trabajo no se c
 Creación de una *annotated tag* (apuntará al último *commit*):
 
 ```
-git tag -a v2.0 -m "La versión 2.0"
+git tag -a 2.0.0 -m "La versión 2"
 ```
 Si no especificamos el mensaje, se abre el editor de texto, como en los *commits*.
 
 Para ver la información de una etiqueta:
 
 ```
-git show v2.0
+git show 2.0.1
 ```
 
 *Lightweight tags*: son simplemente un apuntador a un *commit* específico. Para crearlas no hay que especificar ninguna información, ni `-a`:
 
 ```
-git tag v2.0
+git tag 2.0.1
 ```
 
 Para etiquetar un *commit* que no es el último, obtener el *checksum* del mismo (con `git log`), e indicarlo (con algunos caracteres iniciales es suficiente) al final.
+
+En cuanto al número definido, algunas herramientas como *Composer* lo utilizan para tirar de una versión específica. Estas herramientas aceptan el número tal cual, o con un ***v*** como prefijo. En este caso, ***2.1.3*** tendría el mismo efecto que ***v2.1.3***.
 
 Por defecto, las etiquetas no son enviadas al remoto mediante *push*. Hay que subirlas explícitamente:
 
@@ -395,6 +397,8 @@ Si queremos eliminarla de un remoto:
 ```
 git push <nombreRemoto> --delete <nombreEtiqueta>
 ```
+
+> La numeración que suele utilizarse es del tipo major.minor.patch: *patch* se refiere a mejoras superficiales y *bugfixes*; *minor* son cambios que suelen ser *backward-compatible*; *major* son grandes cambios que no suelen ser *backward-compatible*.
 
 ## Alias
 
