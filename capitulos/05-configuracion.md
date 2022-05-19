@@ -4,7 +4,7 @@ Existen varios parámetros configurables en *Git*. La forma de establecer su val
 
 `git config <variable> <valor>`
 
-En primer lugar, para poder hacer los *commits*, es necesario indicar la identidad del usuario que realiza dichos *commits*. Las variables que podemos usar para esto son `user.email` o `user.name`:
+En primer lugar, para poder hacer los *commits*, es necesario indicar la identidad del usuario que realiza dichos *commits* (no tiene nada que ver con el usuario mediante el que conectamos al servidor remoto donde reside el repositorio). Las dos variables que usa *Git* para establecer esta identidad son `user.email` o `user.name`:
 
 ```
 git config user.name "El Pepe"
