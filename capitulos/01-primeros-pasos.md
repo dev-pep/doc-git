@@ -56,6 +56,8 @@ git config user.email pepe@potamo.com
 git config core.editor vim
 ```
 
+Las variables `user.name` y `user.email` indican la **identidad** del usuario, nombre de usuario y correo electrónico del mismo, de tal modo que esta información obligatoria forma parte de cada *commit* realizado por el usuario. Por otro lado, `core.editor` indica el editor de texto por defecto.
+
 Cuando el valor contiene espacios se deben usar comillas dobles.
 
 Todo repositorio debe estar en una **rama** (se explicará más adelante). Por defecto, al inicializar un repositorio, se crea una rama ***master*** para este, por defecto. Para cambiar el nombre por defecto:
@@ -78,10 +80,16 @@ Para ver el valor de una variable de configuración concreta:
 git config user.name
 ```
 
-Para ver qué nivel es el que da el valor efectivo a esa variable:
+Para ver qué nivel (qué archivo de configuración) es el que da el valor efectivo a esa variable:
 
 ```
 git config --show-origin user.name
+```
+
+Para ver qué nivel da valor efectivo a todas las variables de la configuración actual:
+
+```
+git config --show-origin --list
 ```
 
 ## Ayuda
