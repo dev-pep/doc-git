@@ -42,11 +42,11 @@ En cuanto a los estados, estamos hablando de archivos rastreados por *Git* (*tra
 ## Configuración
 
 Para editar la configuración se puede hacer a través de comandos *Git* o editando los archivos de configuración correspondientes. El comando básico es `git config`. Existen tres niveles de configuración:
-- Nivel de sistema: afecta a todos los usuarios del equipo. Se añade el *flag* `--system`. La configuración suele estar en el archivo ***/etc/gitconfig***.
+- Nivel de sistema: afecta a todos los usuarios del equipo. Se añade el *flag* `--system`. La configuración suele estar en el archivo ***/etc/gitconfig***. Debido a la ubicación del archivo de configuración es posible que sea necesario ejecutar el comando como administrador (o usando `sudo` en *Linux*).
 - Nivel global: afecta a todos los proyectos del usuario. Se añade `--global`, y suele almacenarse en `~/.gitconfig`, o `~/.config/git`.
 - Nivel local: solo afecta al repositorio actual. Es la opción por defecto, aunque se puede especificar `--local`. Se almacena la configuración en el archivo ***.git/config*** dentro del proyecto.
 
-La configuración de un nivel específico *overrides* la de un nivel más general.
+La configuración de un nivel específico tiene preferencia sobre la de un nivel más general. Por otro lado, para cambiar cualquier variable de nivel local, debemos ejecutar el comando desde una carpeta de un repositorio local.
 
 Ejemplos:
 
@@ -56,7 +56,7 @@ git config user.email pepe@potamo.com
 git config core.editor vim
 ```
 
-Las variables `user.name` y `user.email` indican la **identidad** del usuario, nombre de usuario y correo electrónico del mismo, de tal modo que esta información obligatoria forma parte de cada *commit* realizado por el usuario. Por otro lado, `core.editor` indica el editor de texto por defecto.
+Las variables `user.name` y `user.email` indican la **identidad** del usuario, nombre de usuario y correo electrónico del mismo, de tal modo que esta información obligatoria forma parte de cada *commit* realizado por el usuario. Por otro lado, `core.editor` indica el editor de texto por defecto (si no está definida esta variable, se usa el editor por defecto del sistema).
 
 Cuando el valor contiene espacios se deben usar comillas dobles.
 
@@ -90,6 +90,20 @@ Para ver qué nivel da valor efectivo a todas las variables de la configuración
 
 ```
 git config --show-origin --list
+```
+
+Si se desea editar la configuración completa de un nivel determinado, se usa el *flag* `--edit`. Por ejemplo:
+
+```
+git config --global --edit
+```
+
+Este comando abrirá el editor por defecto para editar el archivo de configuración del nivel especificado.
+
+Por otro lado, si deseamos eliminar una variable concreta, usaremos `--unset`:
+
+```
+git config --global --unset core.editor
 ```
 
 ## Ayuda
