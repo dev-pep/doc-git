@@ -96,14 +96,30 @@ A veces nos interesará tener archivos en el directorio de trabajo que no estén
 
 En cada carpeta del proyecto podemos tener un ***.gitignore*** que especifique una lista con los elementos que deben ser ignorados. En cada línea de la lista se incluye un nombre o patrón. Se admiten *wildcards* (***\****, ***?***), y conjuntos de caracteres del tipo ***[apqw]*** o ***[0-9]***. La secuencia ***\*\****, indica número arbitrario de carpetas anidadas (por ejemplo, `a/**/z` coincide con ***a/z***, ***a/b/z***, o ***a/b/c/d/z***).
 
-Los patrones se aplican tanto a archivos como a carpetas. El archivo ***.gitignore*** se aplica de forma recursiva, empezando por el directorio del archivo ***.gitignore***, en todas las subcarpetas. Puede haber un archivo ***.gitignore*** en cada carpeta del proyecto.
+Los patrones referidos a elementos (archivos y directorios) del mismo nivel que el archivo ***.gitignore***, es decir, los **patrones sin ruta** como prefijo (solo el nombre del elemento), se aplicarán **recursivamente** a todas las subcarpetas del directorio actual. En cambio, **si se prefija una ruta no se aplicará recursividad**. Las rutas siempre son relativas al directorio actual, es decir, la carpeta donde está el archivo ***.gitignore***:
 
-Estas son las reglas de aplicación:
+```
+# Ignora todos los archivos PDF, recursivamente desde la carpeta actual:
+*.pdf
 
-- Las líneas en blanco y las que empiezan por almohadilla (***#***) se descartan.
-- Si queremos que el patrón se aplique solo al directorio actual, debe empezar por ***/*** e indicar nombres simples (no rutas en subcarpetas).
-- Para que el patrón se aplique solo a directorios (recursivamente), y no a archivos, debe terminar en ***/***.
-- Para negar el patrón, deberá empezar por ***!***. Esto es útil tras un patrón anterior más general en el mismo archivo, o en un archivo ***.gitignore*** en un nivel inferior en la jerarquía de carpetas.
+# Ignora solo archivos PDF de la carpeta ./doc:
+doc/*.pdf
+
+# Ignora solo los archivos PDF de la carpeta actual:
+/*.pdf
+```
+
+Como podemos ver en el último ejemplo, para evitar la recursión se prefija la ruta mínima ***/*** referida al directorio actual.
+
+Los patrones se aplican **tanto a archivos como a carpetas**. Por lo tanto, en los ejemplos anteriores, una carpeta con extensión ***.pdf*** también se ignoraría, como si fuese un archivo *PDF*.
+
+Puede haber un archivo ***.gitignore*** en cada carpeta del proyecto.
+
+Las líneas en blanco y las que empiezan por almohadilla (***#***) se descartan.
+
+Para que el patrón se aplique **solo a directorios**, debe terminar en ***/***.
+
+Para **negar el patrón**, deberá empezar por ***!***. Esto es útil tras un patrón anterior más general en el mismo archivo, o en un archivo ***.gitignore*** en un nivel inferior en la jerarquía de carpetas.
 
 > No es posible añadir al repositorio un directorio vacío, o compuesto únicamente por archivos ignorados.
 
@@ -114,19 +130,25 @@ Ejemplos:
 !lib.a
 ```
 
-Ignora todos los archivos (y directorio, de hecho) con extensión ***.a***, excepto ***lib.a***.
+Ignora (recursivamente) todos los elementos con extensión ***.a***, excepto ***lib.a***.
 
 ```
 doc/*.pdf
 ```
 
-Ignora todos los archivos (y directorios) ***.pdf***, de la carpeta ***doc*** (pero no los de subcarpetas de esta).
+Ignora todos los elementos ***.pdf***, de la carpeta ***doc*** (pero no los de subcarpetas de esta).
 
 ```
 doc/**/*.pdf
 ```
 
-Ignora todos los archivos (y directorios) ***.pdf***, de la carpeta ***doc*** y de sus subcarpetas.
+Ignora todos los elementos ***.pdf***, de la carpeta ***doc*** **y de sus subcarpetas**.
+
+Por otro lado, puede resultar útil ver qué archivos están siendo ignorados:
+
+```
+git status --ignored
+```
 
 ## Diferencias
 
