@@ -6,7 +6,7 @@ Para inicializar un repositorio local, desde el directorio raíz del proyecto se
 git init
 ```
 
-Esto creará una subcarpeta ***.git*** con el repositorio. Inicialmente, todos los archivos del directorio de trabajo están *untracked*. Estaremos en la rama por defecto (suele llamarse ***master***), y nos faltaría configurar el servidor al que subir (*push*) y del que descargar (*fetch*) cambios. Si queremos hacer *push*, también habrá que configurar las credenciales de autenticación.
+Esto creará una subcarpeta ***.git*** con el repositorio (sin *commits* todavía). Inicialmente, todos los archivos del directorio de trabajo están *untracked*. Estaremos en la rama por defecto (suele llamarse ***master***), y nos faltaría configurar el servidor al que subir (*push*) y del que descargar (*fetch*) cambios. Si queremos hacer *push*, también habrá que configurar las credenciales de autenticación.
 
 Si lo que hacemos, en cambio, es clonar un repositorio de un servidor:
 
@@ -14,7 +14,7 @@ Si lo que hacemos, en cambio, es clonar un repositorio de un servidor:
 git clone <URL>
 ```
 
-Esto creará una carpeta con el nombre de la última parte de la *URL*, en la que se incluirá una copia completa del repositorio (en subcarpeta ***.git***) y un *checkout* de la última versión en el directorio de trabajo.
+Esto creará una carpeta con el nombre de la última parte de la *URL*, en la que se incluirá una copia completa del repositorio (en subcarpeta ***.git***) y un *checkout* del último *commit* de la rama principal como directorio de trabajo.
 
 En este caso, los archivos están *tracked*, el nombre de la rama será el de la última versión en el repositorio, y ya está configurado el servidor. Solo faltaría configurar los datos de autenticación (si queremos enviar cambios).
 
@@ -53,7 +53,7 @@ En ***\<archivo(s)>*** indicamos los archivos deseados. Admite *wildcards* (***\
 
 Si uno de los nombres es una carpeta, se añaden todos los archivos que contiene (y los de sus subcarpetas).
 
-Si como archivo indicamos ***.*** o ***\****, se incluirá **todo** lo *modified* en el proyecto (si tecleamos el comando desde el raíz del mismo).
+Si como archivo indicamos ***.*** o ***\****, se incluirá **todo** lo *modified* (y/o *untracked*) en el proyecto (si tecleamos el comando desde el raíz del mismo).
 
 Para quitar un archivo de la zona de *stage*, es decir, para que los cambios dejen de estar listos para el *commit*:
 
@@ -61,19 +61,51 @@ Para quitar un archivo de la zona de *stage*, es decir, para que los cambios dej
 git restore --staged <archivo(s)>
 ```
 
+Esto retornará los archivos indicados a su anterior estado (*modified* o *untracked*).
+
 Si lo que deseamos es restaurar un archivo a la versión del repositorio, siempre y cuando el archivo no esté *staged*, y exista una versión anterior en el repositorio:
 
 ```
 git restore <archivo(s)>
 ```
 
-Pongamos por ejemplo que un archivo *unmodified* es editado. Entonces pasa a *modified*. Luego lo añadimos al *staging area*, con lo que aparecerá como preparado para *commit*, es decir, *staged*. Si ahora volvemos a editarlo, aparecerá como *staged* y como *modified*. Ello se debe a que parte de sus cambios están listos para el *commit*, pero los últimos que hemos hecho no se incluirán en dicho *commit*.
+Pongamos por ejemplo que un archivo *unmodified* es editado. Entonces pasa a *modified*. Luego lo añadimos al *staging area*, con lo que aparecerá como preparado para *commit*, es decir, *staged*. Si ahora volvemos a editarlo, aparecerá como *staged* y como *modified*. Ello se debe a que parte de sus cambios están listos para el *commit*, pero los últimos que hemos hecho no se incluirán en dicho *commit* hasta que los pasemos al área de *staging* añadiendo el archivo con `git add` nuevamente.
+
+Es posible obtener el **estado abreviado** mediante el comando:
+
+```
+git status --short
+git status -s
+```
+
+En este caso solo aparecerá el nombre de los archivos relevantes, precedidos por un código de dos caracteres, formando dos columnas de caracteres. Uno de los caracteres puede ser un espacio.
+
+El primer carácter indica el estado **en la** ***staging area***, y el segundo, en el directorio de trabajo.
+
+Un archivo *untracked* mostrará `??`. Por otro lado, el carácter que indica que un archivo ha sido añadido (mediante `git add`) desde el estado *untracked* es `A`. El carácter que indica modificación es `M`.
+
+Veamos un ejemplo: un archivo *untracked* (`??`) que se añade al repositorio pasará a mostrar `A` en la primera columna. Si posteriormente (y antes del *commit*) modificamos ese archivo en el directorio de trabajo, mostrará `AM`. Si pasamos estos nuevos cambios al área de *staging*, volverá a mostrar `A` en la primera columna.
+
+Otro ejemplo: un archivo modificado tras el último *commit* mostrará `M` en la segunda columna. Si lo añadimos con `git add`, pasará a mostrar `M` en la primera columna. Si tras esto (y antes de un *commit*) lo volvemos a modificar, mostrará `MM`. Si lo volvemos a añadir, volverá a mostrar `M` en la primera columna.
+
+Tras un *commit*, `git status -s` no muestra nada.
 
 ## Ignorar archivos
 
 A veces nos interesará tener archivos en el directorio de trabajo que no estén rastreados por *Git*. Entonces incluiremos el archivo ***.gitignore*** para que sean ignorados.
 
-En cada carpeta del proyecto podemos tener un ***.gitignore*** que especifique los elementos de dicha carpeta que deben ser ignorados. En cada línea se incluye un nombre o patrón. Se admiten *wildcards* (***\****, ***?***), y conjuntos de caracteres del tipo ***[abc]*** o ***[0-9]***. En caso de ser una referencia a un directorio, se aplicará a todos los archivos de este (y de sus subcarpetas). Si el nombre o patrón empieza por ***/***, solo se aplicará a archivos, mientras que si termina por ***/***, solo se apliacará a directorios. Si el nombre o patrón empieza por ***!***, se niega dicho patrón. La secuencia ***\*****, indica número arbitrario de carpetas anidadas (por ejemplo, `a/**/z` coincide con ***a/z***, ***a/b/z***, o ***a/b/c/d/z***).
+En cada carpeta del proyecto podemos tener un ***.gitignore*** que especifique una lista con los elementos que deben ser ignorados. En cada línea de la lista se incluye un nombre o patrón. Se admiten *wildcards* (***\****, ***?***), y conjuntos de caracteres del tipo ***[apqw]*** o ***[0-9]***. La secuencia ***\*\****, indica número arbitrario de carpetas anidadas (por ejemplo, `a/**/z` coincide con ***a/z***, ***a/b/z***, o ***a/b/c/d/z***).
+
+Los patrones se aplican tanto a archivos como a carpetas. El archivo ***.gitignore*** se aplica de forma recursiva, empezando por el directorio del archivo ***.gitignore***, en todas las subcarpetas. Puede haber un archivo ***.gitignore*** en cada carpeta del proyecto.
+
+Estas son las reglas de aplicación:
+
+- Las líneas en blanco y las que empiezan por almohadilla (***#***) se descartan.
+- Si queremos que el patrón se aplique solo al directorio actual, debe empezar por ***/*** e indicar nombres simples (no rutas en subcarpetas).
+- Para que el patrón se aplique solo a directorios (recursivamente), y no a archivos, debe terminar en ***/***.
+- Para negar el patrón, deberá empezar por ***!***. Esto es útil tras un patrón anterior más general en el mismo archivo, o en un archivo ***.gitignore*** en un nivel inferior en la jerarquía de carpetas.
+
+> No es posible añadir al repositorio un directorio vacío, o compuesto únicamente por archivos ignorados.
 
 Ejemplos:
 
@@ -82,19 +114,19 @@ Ejemplos:
 !lib.a
 ```
 
-Ignora todos los arcivos con extensión ***.a***, excepto ***lib.a***.
+Ignora todos los archivos (y directorio, de hecho) con extensión ***.a***, excepto ***lib.a***.
 
 ```
 doc/*.pdf
 ```
 
-Ignora todos los archivos ***.pdf***, de la carpeta ***doc*** (pero no los de subcarpetas de esta).
+Ignora todos los archivos (y directorios) ***.pdf***, de la carpeta ***doc*** (pero no los de subcarpetas de esta).
 
 ```
 doc/**/*.pdf
 ```
 
-Ignora todos los archivos ***.pdf***, de la carpeta ***doc*** y de sus subcarpetas.
+Ignora todos los archivos (y directorios) ***.pdf***, de la carpeta ***doc*** y de sus subcarpetas.
 
 ## Diferencias
 
