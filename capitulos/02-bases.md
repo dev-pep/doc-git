@@ -158,13 +158,13 @@ A parte de ver el estado de los archivos, podemos ver las diferencias concretas:
 git diff
 ```
 
-Este comando nos muestra los cambios que no han sido enviados al área de *stage* todavía.
+Este comando nos muestra los cambios que no han sido enviados al área de *stage* todavía. Es decir, muestra las diferencias entre el directorio de trabajo y la *staging area*. Si no hay nada en dicha área, muestra las diferencias entre el directorio de trabajo y el último *commit*.
 
 ```
 git diff --staged
 ```
 
-En este caso, se muestran los cambios listos para el *commit*.
+En este caso, se muestran los cambios listos para el *commit*, es decir las diferencias entre la *staging area* y el último *commit*.
 
 ## *Commit*
 
